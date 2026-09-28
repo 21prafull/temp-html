@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qohort — Applied AI Engineering Residency | Qollabra</title>
+<meta name="description" content="A 48-week applied AI engineering programme in four 12-week tiers: full-stack foundations, applied AI, agentic AI and forward deployment. Monthly intake, day and evening tracks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFCF7;      /* Qollabra site background */
+    --ink:#1C1C1C;        /* Qohort theme colour */
+    --ink-2:#4A4845;
+    --rule:#E4DFD6;
+    --wash:#F3EFE7;
+    --accent:#2F4BD8;     /* swap for your brand accent */
+    --accent-ink:#1E34A8;
+    --display:"Newsreader", Georgia, "Times New Roman", serif;
+    --body:"Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --max:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:10}
+  .skip:focus{left:8px}
+
+  /* header */
+  header.site{position:sticky;top:0;z-index:5;background:rgba(255,252,247,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+  header.site .wrap{display:flex;align-items:center;gap:28px;height:64px}
+  .brand{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+  .brand b{font:500 22px/1 var(--display);letter-spacing:-.01em}
+  .brand span{font-size:13px;color:var(--ink-2)}
+  nav.main{display:flex;gap:22px;margin-left:auto;font-size:15px}
+  nav.main a{text-decoration:none;color:var(--ink-2)}
+  nav.main a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:6px;font:600 15px/1 var(--body);text-decoration:none;border:1.5px solid var(--ink);cursor:pointer}
+  .btn.solid{background:var(--ink);color:var(--paper)}
+  .btn.solid:hover{background:var(--accent);border-color:var(--accent)}
+  .btn.line{background:transparent}
+  .btn.line:hover{background:var(--ink);color:var(--paper)}
+  header .btn{padding:9px 14px;font-size:14px}
+  @media (max-width:820px){nav.main{display:none}header .btn{margin-left:auto}}
+
+  .crumb{font-size:14px;color:var(--ink-2);padding-top:28px}
+  .crumb a{text-decoration:none}
+  .crumb a:hover{text-decoration:underline}
+
+  /* type */
+  h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.015em;margin:0}
+  h1{font-size:clamp(40px,6.2vw,76px);line-height:1.02;max-width:15ch}
+  h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;max-width:22ch}
+  h3{font-size:24px;line-height:1.2}
+  p{margin:0 0 1em;max-width:66ch}
+  .lede{font-size:20px;line-height:1.55;color:var(--ink-2);max-width:58ch}
+  .small{font-size:15px;color:var(--ink-2)}
+
+  section{padding:96px 0;border-top:1px solid var(--rule)}
+  section.first{border-top:0;padding-top:40px}
+  .sec-head{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:48px}
+  @media (min-width:900px){.sec-head{grid-template-columns:5fr 6fr;align-items:end}}
+
+  /* hero */
+  .hero-grid{display:grid;gap:40px}
+  .hero-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1.5px solid var(--ink);margin-top:56px}
+  .hero-facts div{padding:16px 16px 16px 0;border-bottom:1px solid var(--rule)}
+  .hero-facts dt{font-size:14px;color:var(--ink-2)}
+  .hero-facts dd{margin:2px 0 0;font:500 21px/1.25 var(--display)}
+  @media (min-width:760px){.hero-facts{grid-template-columns:repeat(4,1fr)}}
+  .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+  /* problem strip */
+  .example{font:400 clamp(22px,2.6vw,30px)/1.4 var(--display);max-width:38ch;margin:0}
+  .example em{font-style:italic;background:linear-gradient(transparent 62%,#DCE2FA 62%)}
+
+  /* track explorer — the signature element */
+  .track{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+  .seg{appearance:none;border:0;background:none;padding:0;display:flex;flex-direction:column;justify-content:flex-start;align-self:start;text-align:left;cursor:pointer;font:inherit;color:inherit}
+  .ticks{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;height:44px}
+  .ticks i{display:block;background:var(--rule);border-radius:2px;transition:background .25s, transform .25s}
+  .seg:hover .ticks i{background:#CFC8BC}
+  .seg[aria-selected="true"] .ticks i{background:var(--accent)}
+  .seg[aria-selected="true"] .ticks i:nth-child(n+11){background:var(--ink)}
+  .seg-label{display:block;margin-top:12px;font-size:14px;color:var(--ink-2)}
+  .seg-label strong{display:block;font:500 19px/1.2 var(--display);color:var(--ink);margin-top:2px}
+  .seg[aria-selected="true"] .seg-label strong{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:5px}
+  .track-scale{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule);padding-top:6px;margin-bottom:40px}
+  .legend{font-size:13px;color:var(--ink-2);display:flex;gap:16px;margin:-24px 0 36px}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--accent)}
+  .legend span:last-child::before{background:var(--ink)}
+  @media (max-width:640px){.seg-label strong{font-size:15px}.ticks{height:32px}}
+
+  .panel{display:grid;gap:40px}
+  @media (min-width:960px){.panel{grid-template-columns:5fr 7fr}}
+  .panel h3{font-size:34px;margin-bottom:14px}
+  .panel .question{font:italic 400 21px/1.4 var(--display);color:var(--ink-2);margin-bottom:20px}
+  ul.plain{list-style:none;padding:0;margin:0}
+  ul.plain li{padding:10px 0;border-bottom:1px solid var(--rule)}
+  ul.plain li b{font-weight:600}
+  .weeks{width:100%;border-collapse:collapse;font-size:15.5px}
+  .weeks th{text-align:left;font-weight:600;font-size:14px;color:var(--ink-2);padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
+  .weeks td{padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+  .weeks td:first-child{white-space:nowrap;font-weight:600;width:70px}
+  .weeks td:last-child{color:var(--ink-2)}
+  .outcome{margin-top:28px;padding:22px 24px;background:var(--wash);border-left:3px solid var(--accent)}
+  .outcome p{margin:0;font:400 19px/1.5 var(--display)}
+  .outcome .small{margin-bottom:6px;font-family:var(--body)}
+  .extra{margin-top:40px;display:grid;gap:32px}
+  @media (min-width:800px){.extra{grid-template-columns:1fr 1fr}}
+  .extra h4{font:600 16px/1.3 var(--body);margin:0 0 8px}
+  [hidden]{display:none!important}
+
+  /* two column audiences */
+  .cols{display:grid;gap:48px}
+  @media (min-width:860px){.cols{grid-template-columns:1fr 1fr}}
+  .cols h3{margin-bottom:14px}
+
+  table.data{width:100%;border-collapse:collapse;font-size:16px}
+  table.data th{text-align:left;font-weight:600;font-size:14px;color:var(--ink-2);padding:0 16px 10px 0;border-bottom:1.5px solid var(--ink)}
+  table.data td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+  table.data td:first-child{font-weight:600;width:28%}
+  .scroll{overflow-x:auto}
+
+  /* studio */
+  .studio{display:grid;gap:0;border-top:1.5px solid var(--ink)}
+  @media (min-width:860px){.studio{grid-template-columns:repeat(3,1fr)}}
+  .studio div{padding:24px 24px 24px 0;border-bottom:1px solid var(--rule)}
+  @media (min-width:860px){.studio div{border-bottom:0;border-right:1px solid var(--rule);padding:24px 28px}.studio div:first-child{padding-left:0}.studio div:last-child{border-right:0}}
+  .studio .when{font-size:14px;color:var(--accent-ink);font-weight:600}
+  .studio h3{margin:6px 0 10px}
+  .studio p{font-size:16px;color:var(--ink-2);margin:0}
+
+  ol.rhythm{list-style:none;padding:0;margin:0;counter-reset:r}
+  ol.rhythm li{display:grid;grid-template-columns:90px 140px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+  ol.rhythm .wk{font-weight:600}
+  ol.rhythm .ph{font-family:var(--display);font-size:19px}
+  ol.rhythm .wh{color:var(--ink-2)}
+  @media (max-width:640px){ol.rhythm li{grid-template-columns:70px 1fr}ol.rhythm .wh{grid-column:2}}
+
+  .standard{background:var(--ink);color:var(--paper);padding:56px 0}
+  .standard p.q{font:400 clamp(24px,3vw,36px)/1.3 var(--display);max-width:30ch;margin:0}
+  .standard .small{color:#B9B5AE;margin-bottom:14px}
+
+  .promise{display:grid;gap:32px}
+  @media (min-width:860px){.promise{grid-template-columns:5fr 7fr}}
+
+  /* faq */
+  details{border-bottom:1px solid var(--rule)}
+  details:first-of-type{border-top:1.5px solid var(--ink)}
+  summary{list-style:none;cursor:pointer;padding:20px 40px 20px 0;font:500 20px/1.3 var(--display);position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:4px;top:16px;font:400 26px/1 var(--body);color:var(--ink-2);transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{color:var(--ink-2);padding-bottom:12px}
+
+  .final{padding:112px 0;text-align:left}
+  .final h2{max-width:18ch;margin-bottom:18px}
+
+  footer{border-top:1px solid var(--rule);padding:40px 0 56px;font-size:15px;color:var(--ink-2)}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between}
+  footer a{text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer .links{display:flex;gap:20px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://qollabra-lake.vercel.app/qohort"><b>Qohort</b><span>by Qollabra</span></a>
+    <nav class="main" aria-label="Programme">
+      <a href="#tiers">Tiers</a>
+      <a href="#how">How it runs</a>
+      <a href="#assessment">Assessment</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://qollabra-lake.vercel.app/qohort/seminars">Seminars</a>
+    </nav>
+    <a class="btn solid" href="https://qollabra-lake.vercel.app/qohort/apply">Apply</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap crumb"><a href="https://qollabra-lake.vercel.app/">Home</a> / Qohort</div>
+
+  <!-- HERO -->
+  <section class="first">
+    <div class="wrap">
+      <p class="small" style="margin-bottom:18px">Applied AI Engineering Residency</p>
+      <h1>Build AI products that still work after the demo.</h1>
+      <p class="lede" style="margin-top:28px">A 48-week programme in four tiers, for final-year students and developers with 2–4 years of experience. You build full-stack software, put AI inside it, build agents that act within limits, then take it all into a real domain.</p>
+      <div class="ctas">
+        <a class="btn solid" href="https://qollabra-lake.vercel.app/qohort/apply">Take the readiness assessment</a>
+        <a class="btn line" href="#tiers">See the tiers</a>
+      </div>
+      <dl class="hero-facts">
+        <div><dt>Structure</dt><dd>4 tiers of 12 weeks</dd></div>
+        <div><dt>Intake</dt><dd>Every month</dd></div>
+        <div><dt>Tracks</dt><dd>Day or evening &amp; weekend</dd></div>
+        <div><dt>Where you start</dt><dd>Set by an entry test</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>The model call is ten lines of code.</h2>
+        <p class="lede">Building a product around it takes months. That surrounding work is what we teach.</p>
+      </div>
+      <p class="example">A 300-page PDF takes <em>four minutes</em> to process, but the browser gives up after thirty seconds. The extraction is right <em>92%</em> of the time, and someone has to find the rest. A user wants to know <em>why</em> the system said what it said.</p>
+      <p class="small" style="margin-top:28px">Every tier ends with something deployed and a review where you walk us through how it works and why you built it that way.</p>
+    </div>
+  </section>
+
+  <!-- TIERS (signature element) -->
+  <section id="tiers">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Four tiers. Enter where your evidence says.</h2>
+        <p class="lede">Each tier is 12 weeks. Pass a tier's entry assessment and you can start there. Select a tier to see what happens each fortnight.</p>
+      </div>
+
+      <div class="track" role="tablist" aria-label="Programme tiers">
+        <!-- filled by script -->
+      </div>
+      <div class="track-scale" aria-hidden="true"><span>Week 1</span><span>12</span><span>24</span><span>36</span><span>48</span></div>
+      <div class="legend" aria-hidden="true"><span>Building</span><span>Review and defence</span></div>
+
+      <div id="panels"></div>
+    </div>
+  </section>
+
+  <!-- WHO -->
+  <section id="who">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Who it's for</h2>
+        <p class="lede">Two groups keep asking us for the same thing from opposite ends.</p>
+      </div>
+      <div class="cols">
+        <div>
+          <h3>Students and recent graduates</h3>
+          <p>College teaches programming, databases and algorithms well. What it rarely gives you is time in the untidy part of software work: vague requirements, a deploy that fails at 11pm, data that doesn't look like the sample, a reviewer who asks why you did it that way.</p>
+          <p>AI tools have made writing code cheap. The engineers who stand out are the ones who can tell whether generated code is right, fit it into a larger system, and own it when it breaks.</p>
+        </div>
+        <div>
+          <h3>Developers with 2–4 years' experience</h3>
+          <p>You already ship software. What you're missing is AI-specific: document pipelines, retrieval, agents, evaluation, and the cost and reliability problems that come with them.</p>
+          <p>You shouldn't have to sit through a React module to get there, so you don't. The entry assessment places you where the new material starts.</p>
+        </div>
+      </div>
+
+      <h3 style="margin:64px 0 18px">Where you'd start</h3>
+      <div class="scroll">
+        <table class="data">
+          <thead><tr><th>Entry point</th><th>You should already be able to</th></tr></thead>
+          <tbody>
+            <tr><td>Tier 1</td><td>Write programs and solve basic problems. No professional experience needed.</td></tr>
+            <tr><td>Tier 2</td><td>Build a full-stack app with an API and a relational database, and deploy it somewhere.</td></tr>
+            <tr><td>Tier 3</td><td>Build and deploy apps that call external services, with solid backend and database fundamentals.</td></tr>
+            <tr><td>Tier 4</td><td>Work across AI application engineering, retrieval and tool use, evaluation, and production deployment.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT RUNS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>It runs like a studio, not a lecture hall.</h2>
+        <p class="lede">Most of your time goes into building. The teaching happens around what you build.</p>
+      </div>
+
+      <div class="studio">
+        <div>
+          <span class="when">At your own pace</span>
+          <h3>Modules</h3>
+          <p>Each tier is a sequence of modules: a short explanation, a build task, and a checklist for what done looks like.</p>
+        </div>
+        <div>
+          <span class="when">Every day</span>
+          <h3>Mentor labs</h3>
+          <p>Bring whatever you're stuck on. Mentors read your code, review your pull requests and push back on your decisions.</p>
+        </div>
+        <div>
+          <span class="when">Every week</span>
+          <h3>Group session</h3>
+          <p>Architecture reviews, demos and debugging walkthroughs with the whole studio. You explain your own work out loud.</p>
+        </div>
+      </div>
+
+      <div class="cols" style="margin-top:72px">
+        <div>
+          <h3>Join any month</h3>
+          <p style="margin-top:14px">New people start at the beginning of every month. You take the entry assessment, get placed in a tier and start its modules straight away. Nobody waits for a batch to fill up.</p>
+          <p>Twelve weeks is the expected pace for a tier. Weekly sessions mix people at different stages, so newcomers see where they're heading and people further along have to explain what they know.</p>
+        </div>
+        <div>
+          <h3>Pick a track</h3>
+          <div class="scroll" style="margin-top:14px">
+            <table class="data">
+              <thead><tr><th></th><th>Day</th><th>Evening &amp; weekend</th></tr></thead>
+              <tbody>
+                <tr><td>For</td><td>Final-year students and recent graduates</td><td>Working developers</td></tr>
+                <tr><td>Labs</td><td>During the working day</td><td>Weekday evenings and weekends</td></tr>
+                <tr><td>Curriculum</td><td colspan="2">Identical on both tracks, with the same assessments</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin:72px 0 18px">How a tier moves</h3>
+      <ol class="rhythm">
+        <li><span class="wk">Weeks 1–2</span><span class="ph">Baseline</span><span class="wh">We check where you are, introduce the system you'll build and set expectations.</span></li>
+        <li><span class="wk">Weeks 3–7</span><span class="ph">Build</span><span class="wh">You implement the core pieces through guided modules and lab reviews.</span></li>
+        <li><span class="wk">Weeks 8–9</span><span class="ph">Break it</span><span class="wh">We add load, bad data, security problems and failures. You work out what went wrong.</span></li>
+        <li><span class="wk">Weeks 10–11</span><span class="ph">Harden</span><span class="wh">You fix what broke, write down your decisions and go through code and architecture review.</span></li>
+        <li><span class="wk">Week 12</span><span class="ph">Defend</span><span class="wh">You present the system and answer technical questions on your own.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ASSESSMENT -->
+  <section id="assessment">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>You pass by showing the work.</h2>
+        <p class="lede">Not by attending. Every assessment puts you in front of people who will ask hard questions.</p>
+      </div>
+      <div class="cols">
+        <ul class="plain">
+          <li><b>Build tasks.</b> Implement a feature or subsystem under stated constraints.</li>
+          <li><b>Code review.</b> Explain your choices, spot the risks, respond to feedback.</li>
+          <li><b>Debugging.</b> Fix a broken system you've never seen before.</li>
+          <li><b>Architecture review.</b> Compare options and argue for one.</li>
+          <li><b>Evaluation.</b> Design test cases, read the failures, report the limits honestly.</li>
+          <li><b>Technical defence.</b> Explain the whole system on your own, including the parts an AI tool helped write.</li>
+        </ul>
+        <div>
+          <h3>On AI coding tools</h3>
+          <p style="margin-top:14px">Use them. Engineers use them every day and so will you. You must understand what the tool produced, check that it works, disclose where it did significant work, and be ready to defend every line.</p>
+          <p>Assessments include unaided code-reading and debugging. If you can't explain it, it doesn't count.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="standard">
+    <div class="wrap">
+      <p class="small">The standard we hold every project to</p>
+      <p class="q">Why is it built this way? How do we know it works? What happens when it fails? What would you change next?</p>
+    </div>
+  </div>
+
+  <!-- OUTCOMES -->
+  <section id="outcomes">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What you leave with</h2>
+        <p class="lede">A body of work that shows growing responsibility. Tools will change. The skills behind this work won't.</p>
+      </div>
+      <div class="scroll">
+        <table class="data">
+          <thead><tr><th>What you'll have</th><th>What it shows an employer</th></tr></thead>
+          <tbody>
+            <tr><td>Deployed software systems</td><td>You can take code all the way to a running service.</td></tr>
+            <tr><td>Reviewed pull requests and design notes</td><td>You can work inside an engineering team and take feedback.</td></tr>
+            <tr><td>An AI document workflow</td><td>You can put models inside a larger application.</td></tr>
+            <tr><td>An evaluation suite</td><td>You measure AI behaviour instead of trusting a demo.</td></tr>
+            <tr><td>Traces and incident write-ups</td><td>You can run and debug AI systems.</td></tr>
+            <tr><td>A field case study</td><td>You can turn a domain problem into a working solution and measure the result.</td></tr>
+            <tr><td>Recorded technical defences</td><td>You can explain your work without help.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="promise" style="margin-top:80px">
+        <h3>What we will not promise</h3>
+        <div>
+          <p>No salary figures, placement guarantees or accreditation claims. We provide supervised practice, assessed evidence of your capability and structured job-search support.</p>
+          <p>Hiring decisions stay with employers, and your evidence is what they will look at.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head"><h2>Questions</h2></div>
+      <details><summary>Do I have to start at Tier 1?</summary><p>No. Each tier can be entered directly after passing its entry assessment.</p></details>
+      <details><summary>How long is the programme?</summary><p>Each tier is 12 weeks. The full four-tier pathway is 48 weeks. Because modules are self-paced, some people move faster through material they already know.</p></details>
+      <details><summary>When can I join?</summary><p>At the start of any month. Take the readiness assessment and we'll place you in the right tier.</p></details>
+      <details><summary>I have a full-time job. Can I still do this?</summary><p>Yes. The evening and weekend track runs the same curriculum and assessments, with labs outside working hours.</p></details>
+      <details><summary>Is it online or in person?</summary><p>Our initial catchment is Pune, PCMC, Moshi and Alandi. Confirm the format for your intake on the application page.</p></details>
+      <details><summary>What happens in Tier 4?</summary><p>You work on a real problem in a domain such as legal technology, alongside domain experts and under supervision. Which domains are open depends on the partner projects active when you reach Tier 4.</p></details>
+      <details><summary>Can I use AI coding assistants?</summary><p>Yes, with disclosure. You remain responsible for your tests and changes, and assessments include unaided code-reading and debugging.</p></details>
+      <details><summary>Do you guarantee a job or placement?</summary><p>No. We provide supervised practice, assessed evidence of your capability and structured job-search support. Hiring decisions remain with employers.</p></details>
+      <details><summary>What does the credential mean?</summary><p>A Qollabra competency credential records the tier, assessment date and evidence of what you demonstrated. It is not a university degree or government-accredited diploma.</p></details>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Find out which tier you'd start in.</h2>
+      <p class="lede" style="margin-bottom:28px">The readiness assessment is practical, and it tells you exactly what you'd need to work on first.</p>
+      <div class="ctas" style="margin-top:0">
+        <a class="btn solid" href="https://qollabra-lake.vercel.app/qohort/apply">Take the readiness assessment</a>
+        <a class="btn line" href="https://qollabra-lake.vercel.app/qohort/seminars">See college seminars</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Qohort is the education venture of <a href="https://qollabra-lake.vercel.app/">Qollabra</a>.<br><a href="mailto:hello@qollabra.com">hello@qollabra.com</a> &nbsp; <a href="tel:+918550964848">+91 8550-96-4848</a></div>
+    <div class="links"><a href="https://qollabra-lake.vercel.app/privacy">Privacy</a><a href="https://qollabra-lake.vercel.app/terms">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+const TIERS = [
+  {
+    n:1, name:"Software Engineering Foundations", weeks:"Weeks 1–12",
+    q:"Can you build and deploy a reliable application?",
+    intro:"Everything later depends on this. You see how one complete application gets designed, built, tested, secured, deployed and kept running.",
+    topics:[
+      ["React","components, forms, state, API calls and login flows"],
+      ["FastAPI","REST design, validation, auth, async endpoints and service structure"],
+      ["PostgreSQL","schemas, constraints, indexes, transactions and migrations"],
+      ["Team workflow","Git, pull requests, code review, tests and documentation"],
+      ["Shipping","Docker, environments and enough AWS to run what you built"]
+    ],
+    plan:[
+      ["1–2","Architecture, HTTP, API contracts, data modelling","An agreed architecture and data model"],
+      ["3–4","React and FastAPI, forms, validation, authentication","A working, logged-in slice of the app"],
+      ["5–6","Queries, relationships, constraints, indexes, migrations","A data layer you'd trust in production"],
+      ["7–8","Tests, logging, error handling, code review","A set of reviewed pull requests"],
+      ["9–10","Docker, environments, AWS basics, CI/CD","The app running in the cloud"],
+      ["11–12","Hardening, documentation, technical review","An end-to-end system you can defend"]
+    ],
+    end:"You can build and deploy a practical web application on your own, explain its architecture and database design, and track down common failures."
+  },
+  {
+    n:2, name:"Applied AI Engineering", weeks:"Weeks 13–24",
+    q:"Can you put AI inside a real software workflow?",
+    intro:"AI becomes one component in a bigger system. Most of the work sits around the model call: getting documents in, reading them, running long jobs in the background and showing the user what's happening.",
+    topics:[
+      ["LLM integration","structured outputs, validation, model choice, retries and cost"],
+      ["Document pipelines","PDFs, OCR, page-level extraction and tracking where each answer came from"],
+      ["Background work","queues, workers, dead-letter handling and idempotency"],
+      ["Service boundaries","when splitting a system helps and when it just adds complexity"],
+      ["Live status","server-sent events, progress, cancellation and useful failure messages"]
+    ],
+    plan:[
+      ["1–2","Model APIs, structured output, validation","An AI feature with test cases"],
+      ["3–4","OCR, PDFs, extraction, evidence","A document processing pipeline"],
+      ["5–6","Jobs, queues, retries, idempotency","A worker workflow that survives failures"],
+      ["7–8","Events, service boundaries, trade-offs","An event-driven slice of the system"],
+      ["9–10","SSE, progress, cancellation","A UI for long-running jobs"],
+      ["11–12","Deployment, scaling basics, logs, cost","An AI service running end to end"]
+    ],
+    end:"You can put AI inside an asynchronous system, process messy real-world documents, plan for failure, and run the result as a service."
+  },
+  {
+    n:3, name:"Agentic AI Engineering", weeks:"Weeks 25–36",
+    q:"Can you build AI that retrieves, uses tools and acts within limits?",
+    intro:"The model gets more room: it looks things up, picks tools and takes limited actions. The engineering question is control. Who can do what, how you know it's working, and what happens when it isn't.",
+    topics:[
+      ["Retrieval","embeddings, pgvector, hybrid search, reranking and measuring retrieval"],
+      ["Tools and agents","schemas, read vs. write actions, loops, stopping conditions and budgets"],
+      ["State and memory","multi-step tasks, context management and checkpoints"],
+      ["Evaluation","datasets, baselines, factuality, tool behaviour and regression tests"],
+      ["Safety and scale","prompt injection, approval gates, audit trails, rate limits and backpressure"]
+    ],
+    plan:[
+      ["1–2","Embeddings, pgvector, search strategies","A measured retrieval baseline"],
+      ["3–4","Tool design, schemas, permissions","An assistant that uses tools within limits"],
+      ["5–6","Context, memory, checkpoints","A multi-step agent that can resume"],
+      ["7–8","Retrieval, tools and context together","An agent that cites its evidence"],
+      ["9–10","Traces, datasets, graders","An evaluation and telemetry suite"],
+      ["11–12","Approvals, rate limits, cost","An agent system ready for real users"]
+    ],
+    end:"You can judge when an agent is the right tool, build controlled tool use, measure behaviour, and stop the system from acting when the stakes are high."
+  },
+  {
+    n:4, name:"Forward Deployed AI Engineering", weeks:"Weeks 37–48",
+    q:"Can you take this into a domain you don't know yet?",
+    intro:"You stop working from a spec we wrote. You work with partner organisations, under supervision, in a domain where the experts understand the problem better than you do. Your job is to learn it fast enough to build something that helps them.",
+    topics:[
+      ["Discovery","interviewing experts and telling the symptom apart from the problem"],
+      ["Learning the domain","terms, people, systems, rules and where automation isn't acceptable"],
+      ["Prototyping","quick spikes to check feasibility before building anything big"],
+      ["Integration","existing databases, APIs, auth and third-party services"],
+      ["Measuring impact","does it save time, cut errors or make something newly possible?"]
+    ],
+    plan:[
+      ["1–2","Stakeholder interviews, workflow mapping, success metrics","A domain problem brief"],
+      ["3–4","Data sources, integrations, feasibility","A technical discovery report"],
+      ["5–6","Model experiments, data exploration, feedback","A working prototype and demo"],
+      ["7–8","APIs, auth, data flow, evaluation and controls","An integrated feature or service"],
+      ["9–10","Monitoring, security, deployment, runbooks","A deployment-ready system"],
+      ["11–12","Expert review, impact, handover and defence","A field case study for your portfolio"]
+    ],
+    end:"You can walk into an unfamiliar domain, understand the problem from experts, build an AI-enabled solution and show whether it created real value.",
+    extra:true
+  }
+];
+
+const track = document.querySelector(".track");
+const panels = document.getElementById("panels");
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+TIERS.forEach((t,i)=>{
+  const b = document.createElement("button");
+  b.className="seg"; b.role="tab"; b.id=`tab-${t.n}`;
+  b.setAttribute("aria-controls",`panel-${t.n}`);
+  b.setAttribute("aria-selected", i===0);
+  b.tabIndex = i===0 ? 0 : -1;
+  b.innerHTML = `<span class="ticks" aria-hidden="true">${"<i></i>".repeat(12)}</span>
+    <span class="seg-label">Tier ${t.n}<strong>${esc(t.name)}</strong></span>`;
+  track.appendChild(b);
+
+  const p = document.createElement("div");
+  p.className="panel"; p.id=`panel-${t.n}`; p.role="tabpanel";
+  p.setAttribute("aria-labelledby",`tab-${t.n}`); p.tabIndex=0;
+  if(i!==0) p.hidden=true;
+  p.innerHTML = `
+    <div>
+      <p class="small" style="margin-bottom:8px">Tier ${t.n}, ${t.weeks}</p>
+      <h3>${esc(t.name)}</h3>
+      <p class="question">${esc(t.q)}</p>
+      <p>${esc(t.intro)}</p>
+      <ul class="plain" style="margin-top:20px">${t.topics.map(([a,b])=>`<li><b>${esc(a)}:</b> ${esc(b)}</li>`).join("")}</ul>
+    </div>
+    <div>
+      <div class="scroll"><table class="weeks">
+        <thead><tr><th>Weeks</th><th>What you work on</th><th>What you'll have</th></tr></thead>
+        <tbody>${t.plan.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody>
+      </table></div>
+      <div class="outcome"><p class="small">By the end of Tier ${t.n}</p><p>${esc(t.end)}</p></div>
+    </div>
+    ${t.extra ? `
+    <div class="extra" style="grid-column:1/-1">
+      <div>
+        <h4>Domains</h4>
+        <p class="small">Domains we work in or are setting up partnerships in. What's open depends on the partner projects active when you reach Tier 4.</p>
+        <ul class="plain">
+          <li><b>Legal technology:</b> document-heavy workflows where mistakes are costly</li>
+          <li><b>Healthcare:</b> structured records and automation that keeps a human in charge</li>
+          <li><b>Historical archives:</b> OCR on old documents and transcription</li>
+          <li><b>Real estate:</b> property data and document-heavy operations</li>
+          <li><b>Hospitality:</b> day-to-day operations and staff access to knowledge</li>
+          <li><b>Finance and mutual funds:</b> structured financial data and explainable outputs</li>
+          <li><b>Sports:</b> performance data and decision support</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Situations you'll learn to handle</h4>
+        <p class="small">What the field actually throws at you.</p>
+        <ul class="plain">
+          <li><b>The requirement is vague.</b> Keep asking until you understand the workflow, users and what success looks like.</li>
+          <li><b>The data is a mess.</b> Understand it before you pick a model or architecture.</li>
+          <li><b>The client asks for "an agent".</b> Check whether a fixed workflow would do the job better.</li>
+          <li><b>An expert rejects your prototype.</b> Find out whether it's a domain rule or a technical limit, then redesign.</li>
+          <li><b>It works but creates new manual work.</b> Measure the whole workflow, not just model accuracy.</li>
+        </ul>
+      </div>
+    </div>` : ""}`;
+  panels.appendChild(p);
+});
+
+const tabs = [...track.querySelectorAll(".seg")];
+function select(i, focus){
+  tabs.forEach((t,j)=>{
+    const on = j===i;
+    t.setAttribute("aria-selected", on);
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+  });
+  if(focus) tabs[i].focus();
+}
+tabs.forEach((t,i)=>{
+  t.addEventListener("click",()=>select(i));
+  t.addEventListener("keydown",e=>{
+    if(e.key==="ArrowRight"){e.preventDefault();select((i+1)%tabs.length,true)}
+    if(e.key==="ArrowLeft"){e.preventDefault();select((i-1+tabs.length)%tabs.length,true)}
+    if(e.key==="Home"){e.preventDefault();select(0,true)}
+    if(e.key==="End"){e.preventDefault();select(tabs.length-1,true)}
+  });
+});
+</script>
+</body>
+</html>
